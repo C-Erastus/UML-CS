@@ -27,7 +27,7 @@ MY_STRING my_string_init_c_string(const char* c_string);
 
 //Precondition: hMy_string is the handle of a valid My_string object
 //Postcondition: Returns a copy of the integer value of the objects capacity 
-int my_string_get_capacity(My_STRING hMy_string); 
+int my_string_get_capacity(MY_STRING hMy_string); 
 
 //Precondition: hMy_string is the handle of a valid My_string object
 //Postcondition: Returns a copy of the integer value of the objects size

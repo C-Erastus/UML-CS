@@ -38,29 +38,34 @@ MY_STRING my_string_init_c_string(const char* c_string){
 	for(int i = 0; c_string[i] != '\0'; i++){
 		size+=i; // get the size of the string
 	}
-	pMy_string = (My_string*)malloc(sizeof(My_string)); 
-	if(pMy_string != NULL){
-		pMy_string->size = size; 
-		pMy_string->capacity = size+1;
-		pMy_string->data = (char*)malloc(sizeof(char)*pMy_string->capacity);
-		if(pMy_string->data == NULL){
+	size+=1; // this done because the extra room is needecd to put in the NULL terminator
+	pMy_string = (My_string*)malloc(sizeof(My_string)); // Allocate space for the string object
+	if(pMy_sckring != NULL){ // check if malloc return NULL 
+		pMy_string->size = size; // set the size of the string object
+		pMy_string->capacity = size+1; // set the capacity to be one greater than the size
+		pMy_string->data = (char*)malloc(sizeof(char)*pMy_string->capacity); // Allocate space for data 
+		if(pMy_string->data == NULL){ // check if malloc return NULL
 			free(pMy_string);
 			return NULL; 
 		}
-		pMy_string->data = c_string;
+		// copy the string character by character from c_string into pMy_string->data
+		for(int i = 0; c_string[i] != '\0'; i++){
+			pMy_string->data[i] = c_string[i]; 
+		}
+		pMy_string->data[size-1] = '\0'; // Add in the NULL terminator
 		return pMy_string; 
 	}
 	return NULL; 
 }
 
 int my_string_get_capacity(MY_STRING hMy_string){
-	My_string* pMy_string = (My_string*)hMy_string; 
-	return pMy_string->capacity;
+	My_string* pMy_string = (My_string*)hMy_string; // cast to the known type
+	return pMy_string->capacity; // return the object capacity
 }
 
 int my_string_get_size(MY_STRING hMy_string){
-	My_string* pMy_string = (My_string*)hMy_string; 
-	return pMy_string->size;
+	My_string* pMy_string = (My_string*)hMy_string; // cast to the known type
+	return pMy_string->size; // return the object size
 }
 
 int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string){
@@ -70,7 +75,7 @@ int my_string_compare(MY_STRING hLeft_string, MY_STRING hRight_string){
 	if(pLMy_string->data == pRMy_string->data){ // if the string are the same return 0
 		return 0; 
 	} 
-	for(int i = 0; i < pLMy_string->size; i++}{
+	for(int i = 0; i < pLMy_string->size; i++){
 		if (pLMy_string->data[i] > pRMy_string->data[i]){
 			return -1; // if the left string is bigger return -1
 		}
